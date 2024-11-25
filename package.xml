@@ -4,7 +4,7 @@
   <name>turtlebot4_lava_integration</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="wesley-jones@todo.todo">wesley-jones</maintainer>
+  <maintainer email="wesoccer2003@yahoo.com">Wesley H Jones</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
