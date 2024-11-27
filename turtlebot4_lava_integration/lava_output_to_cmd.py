@@ -2,17 +2,20 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import zmq
+from .config_utils import get_port_from_config
 
 class LavaOutputToCmdNode(Node):
     def __init__(self):
         super().__init__('lava_output_to_cmd')
+        # Get port from config file
+        port = get_port_from_config("velocity_command")
         self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 1)
 
         # Set up ZeroMQ subscriber
         self.zmq_context = zmq.Context()
         self.zmq_socket = self.zmq_context.socket(zmq.SUB)
         self.zmq_socket.setsockopt(zmq.RCVHWM, 1)  # Set max queue size to 1
-        self.zmq_socket.connect("tcp://localhost:5556")  # Connect to the Lava SNN output port
+        self.zmq_socket.connect(f"tcp://localhost:{port}")  # Connect to the Lava SNN output port
         self.zmq_socket.setsockopt_string(zmq.SUBSCRIBE, "")  # Subscribe to all messages
 
         # Timer to poll ZeroMQ messages periodically
@@ -36,7 +39,8 @@ class LavaOutputToCmdNode(Node):
                 self.publisher_.publish(move_cmd)
 
             else:
-                self.get_logger().info("No commands received from Lava SNN.")
+                pass
+                # self.get_logger().info("No commands received from Lava SNN.")
         except zmq.Again:  # Handle the case where no messages are available
             self.get_logger().info("No messages in the ZeroMQ queue.")
         except zmq.ZMQError as e:

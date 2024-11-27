@@ -21,7 +21,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'integration_node = turtlebot4_lava_integration.integration_node:main',
             'lidar_to_lava = turtlebot4_lava_integration.lidar_to_lava:main',
             'lava_output_to_cmd = turtlebot4_lava_integration.lava_output_to_cmd:main'
         ],

@@ -1,0 +1,5 @@
+{
+    "lidar_sensor": 5555,
+    "velocity_command": 5556,
+    "hazard_sensor": 5557
+}

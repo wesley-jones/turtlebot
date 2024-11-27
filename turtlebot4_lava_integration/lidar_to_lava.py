@@ -3,6 +3,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 import numpy as np
 import zmq
+from .config_utils import get_port_from_config
 
 class LidarToLavaNode(Node):
     def __init__(self):
@@ -14,9 +15,10 @@ class LidarToLavaNode(Node):
             1)
         
         # Set up ZeroMQ context and publisher
+        port = get_port_from_config("lidar_sensor")
         self.zmq_context = zmq.Context()
         self.zmq_socket = self.zmq_context.socket(zmq.PUB)
-        self.zmq_socket.bind("tcp://*:5555")  # Bind to a ZeroMQ port
+        self.zmq_socket.bind(f"tcp://*:{port}")  # Bind to a ZeroMQ port
 
     def scan_callback(self, msg):
         # Divide the scan data into left, center, and right sectors

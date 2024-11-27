@@ -14,7 +14,7 @@ def generate_launch_description():
     pkg_turtlebot4_ignition_bringup = get_package_share_directory(
         'turtlebot4_ignition_bringup')
     
-    # Launch Gazebo with TrutleBot 4
+    # Launch Gazebo with TurtleBot 4
     gazebo_launch = PathJoinSubstitution(
         [pkg_turtlebot4_ignition_bringup, 'launch', 'turtlebot4_ignition.launch.py'])
     gazebo = IncludeLaunchDescription(
